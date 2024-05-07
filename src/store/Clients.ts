@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import type { Client } from '@/clients/interfaces/Cllient';
+import type { Client } from '@/clients/interfaces/Client';
 
 export const useClientsSetup = defineStore('Clients', () => {
 

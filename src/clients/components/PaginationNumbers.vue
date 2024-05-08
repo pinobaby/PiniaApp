@@ -1,14 +1,48 @@
-
 <script setup lang="ts">
+import { defineProps, defineEmits } from 'vue';
+import { ref, toRef, watch } from 'vue';
+
+interface Props {
+    totalPages: number;
+    currentPage: number;
+}
+interface Emits {
+    (e: 'pageChanged', page: number ):void;
+}
+
+const props = defineProps<Props>();
+const emits = defineEmits<Emits>();
+
+const totalPages  = toRef( props, 'totalPages' );
+const currentPage = toRef( props, 'currentPage' );
+
+
+const totalPageNumbers  = ref<number[]>([]);
+
+watch( totalPages, () => {
+    totalPageNumbers.value = [...new Array(totalPages.value)].map( (v, i) => i + 1 );
+}, { immediate: true });
+
 </script>
 
 <template>
     <div>
-        <button>Anterior</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>Siguiente</button>
+        <button
+            :disabled="currentPage === 1"
+            @click="emits( 'pageChanged', currentPage - 1 )"
+        >Anterior</button>
+        
+        <button
+            v-for="number of totalPageNumbers"
+            :key="number"
+            :class="{ active: currentPage === number }"
+            @click="emits( 'pageChanged', number )"
+        >{{ number }}</button>
+
+        <button
+            :disabled="currentPage === totalPages"
+            @click="emits( 'pageChanged', currentPage + 1 )"
+        >Siguiente</button>
     </div>
 </template>
 
@@ -43,3 +77,5 @@ button:disabled {
 
 
 </style>
+
+

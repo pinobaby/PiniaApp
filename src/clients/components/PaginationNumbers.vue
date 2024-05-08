@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue';
+
 import { ref, toRef, watch } from 'vue';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
     currentPage: number;
 }
 interface Emits {
-    (e: 'pageChanged', page: number ):void;
+    (event: 'pageChanged', page: number): void;
 }
 
 const props = defineProps<Props>();
